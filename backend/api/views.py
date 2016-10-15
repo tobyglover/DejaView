@@ -45,21 +45,17 @@ def uploadImage(request):
 
 		if request.method == "POST":
 			baseDir = "/tmp/"
-			uploaded_file = request.FILES['file']
-			file_name = uploaded_file.name
-			with open(baseDir + file_name, 'wb+') as destination:
-				for chunk in uploaded_file.chunks():
-					destination.write(chunk)
 
-			return HttpResponse(file_name)
 			while True:
 				fileId = hhc(randint(0, 66**8))
 				filePath = baseDir + fileId
 				if not os.path.isfile(filePath):
 					break
 
-			with open(filePath, "wb") as fh:
-				fh.write(request.POST.get("image").decode('base64'))
+			uploaded_file = request.FILES['file']
+			with open(filePath, 'wb+') as destination:
+				for chunk in uploaded_file.chunks():
+					destination.write(chunk)
 
 			ImageHandler().uploadFile(eventId, fileId, filePath)
 		else:
