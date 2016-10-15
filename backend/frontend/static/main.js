@@ -21,6 +21,11 @@ function register_event(code){
     location.reload();
 }
 
+function add_event(){
+    var code = prompt("Enter the code you recieved from the event organizers: ", "");
+    register_event(code);
+}
+
 function get_events(){
     var events = readCookie("events");
 }
@@ -31,19 +36,25 @@ function generate_event_card(id){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );
-    var response = JSON.parse(xmlHttp.responseText)
-    return "<a href='/gallary/"+id+"'><div class='event'><h2>"+response.name+"</h2>"+id+"</div></a>"
+    var response = JSON.parse(xmlHttp.responseText);
+    //return "<a href='/gallary/"+id+"'><div class='event'><img src='http://placehold.it/300x300'><div><h2 class='col-xs-6'>"+response.name+"</h2><h3 class='col-xs-6'>("+id+")</h3><h4 class='col-xs-12'>("+id+")</h4></div></div></a>"
+    return "<a href='/gallary/"+id+"'><div class='row'><img src='http://placehold.it/300x300' class='col-xs-3'><div class='col-xs-9'><div class='row'><h2 class='col-xs-3'>"+response.name+"</h2><h2 class='col-xs-3'>"+id+"</h2></div><div class='row'><h2 id='desc' class='col-xs-12'>"+response.description+"</h2></div></div></div></a>";
 }
 
 function create_event(){
     var retVal = prompt("Enter your desired event name: ", "");
-    var theUrl = baseURL + "/api/createEvent?name="+retVal;
-    console.log("Making a get request to ["+theUrl+"] to create a new event.");
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    var response = JSON.parse(xmlHttp.responseText)
-    alert("Your event ID is: " + response.eventId);
+
+    if (retVal.length >= 5){
+        var theUrl = baseURL + "/api/createEvent?name="+retVal;
+        console.log("Making a get request to ["+theUrl+"] to create a new event.");
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        var response = JSON.parse(xmlHttp.responseText)
+        alert("Your event ID is: " + response.eventId);
+    }else{
+        alert("Please enter a name at least 5 characters long.");
+    }
 }
 
 /* STATUP */
