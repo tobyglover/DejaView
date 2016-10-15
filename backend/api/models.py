@@ -8,3 +8,8 @@ class Events(models.Model):
 	description = models.CharField(max_length=200, blank=True)
 	eventImage = models.CharField(max_length=200, blank=True)
 	created = models.DateTimeField(auto_now=True)
+
+class Images(models.Model)
+	event = models.ForeignKey(Events, on_delete=models.DO_NOTHING)
+	s3Key = models.CharField(max_length=200, blank=True)
+	created = models.DateTimeField(auto_now=True)
