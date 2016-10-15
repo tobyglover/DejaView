@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "73C66B6B7DAB49ED9A58F2617645968EB9257046",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1B63CF1E3C0CB56BE35E0AFD14978197F2139A53" : 9223372036854775807,
+    "73C66B6B7DAB49ED9A58F2617645968EB9257046" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AEA3FA86-1C69-47F5-940A-53518A3B3BEB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1B63CF1E3C0CB56BE35E0AFD14978197F2139A53" : "..",
+    "73C66B6B7DAB49ED9A58F2617645968EB9257046" : "imghost\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "imghost",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iOS\/imghost\/imghost.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/maxgreenwald\/comp15.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1B63CF1E3C0CB56BE35E0AFD14978197F2139A53"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:wtglover\/imghost.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "73C66B6B7DAB49ED9A58F2617645968EB9257046"
+    }
+  ]
+}
