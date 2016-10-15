@@ -19,7 +19,7 @@ def createEvent(request):
 		event = Events(name=request.GET.get("name"))
 		while True:
 			external_id = hhc(randint(0, 66**4))
-			if Events.objects.filter(external_id).count() == 0:
+			if Events.objects.filter(external_id=external_id).count() == 0:
 				break
 
 		event.external_id = external_id
