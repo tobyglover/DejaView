@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django import forms
 
-from .models import Events, Images
+from .models import Events
 
 from random import randint
 import os.path
