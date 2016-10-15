@@ -35,6 +35,7 @@ def createEvent(request):
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
 
+
 def uploadImage(request):
 	returnContent = {}
 
@@ -47,10 +48,10 @@ def uploadImage(request):
 			uploaded_file = request.FILES['file']
 			file_name = uploaded_file.name
 			with open(baseDir + file_name, 'wb+') as destination:
-            	for chunk in uploaded_file.chunks():
-                	destination.write(chunk)
+				for chunk in uploaded_file.chunks():
+					destination.write(chunk)
 
-            return HttpResponse(file_name)
+			return HttpResponse(file_name)
 			while True:
 				fileId = hhc(randint(0, 66**8))
 				filePath = baseDir + fileId
