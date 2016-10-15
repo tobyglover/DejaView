@@ -5,7 +5,7 @@ from django import forms
 from .models import Events, Images
 
 from random import randint
-import os.path
+import os
 from hexahexacontadecimal import hhc
 from .ImageHandler import ImageHandler
 
@@ -38,6 +38,7 @@ def createEvent(request):
 
 
 def uploadImage(request):
+	acceptedExtensions = [".jpeg", ".jpg", ".png", ".img"]
 	returnContent = {}
 
 	if "eventId" in request.GET:
@@ -46,20 +47,30 @@ def uploadImage(request):
 			event = Events.objects.get(external_id=eventId)
 			if request.method == "POST":
 				uploaded_file = request.FILES['picture']
-				baseDir = "/tmp/"
-				fileId = hhc(randint(0, 66**8))
-				filePath = baseDir + fileId + uploaded_file.name
+				uploadedFileName = uploaded_file.name
+				filename, fileExtension = os.path.splitext(uploadedFileName)
 
-				with open(filePath, 'wb+') as destination:
-					for chunk in uploaded_file.chunks():
-						destination.write(chunk)
+				if not fileExtension.lower() in acceptedExtensions:
+					returnContent["statusCode"] = 400
+					returnContent["reason"] = "Incorrect filetype"
 
-				s3Key = ImageHandler().uploadFile(eventId, fileId, filePath)
-				image = Images(s3Key=s3Key, event=event)
-				image.save()
+				else:
+					baseDir = "/tmp/"
+					fileId = hhc(randint(0, 66**8))
+					filePath = baseDir + fileId + uploaded_file.name
 
-				returnContent["statusCode"] = 200
-				returnContent["reason"] = "all good"
+					with open(filePath, 'wb+') as destination:
+						for chunk in uploaded_file.chunks():
+							destination.write(chunk)
+
+					s3Key = ImageHandler().uploadFile(eventId, fileId, filePath)
+					image = Images(s3Key=s3Key, event=event)
+					image.save()
+
+					os.remove(filePath)
+
+					returnContent["statusCode"] = 200
+					returnContent["reason"] = "all good"
 			else:
 				returnContent["statusCode"] = 400
 				returnContent["reason"] = "Incorrect method or data"
