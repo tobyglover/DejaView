@@ -41,7 +41,7 @@ def uploadImage(request):
 	if "eventId" in request.GET:
 		eventId = request.GET.get("eventId")
 		# TODO:check if this is real eventId
-		
+
 		if request.method == "POST":
 			baseDir = "/tmp/imgs/"
 			while True:
@@ -62,3 +62,19 @@ def uploadImage(request):
 		returnContent["reason"] = "EventId not provided"
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
+
+# @api_view(['POST'])
+# @parser_classes((JSONParser,))
+# def joel(request, format=None):
+# 	return Response({'recieved data': request.data})
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+class joel(APIView):
+	parser_classes = (FileUploadParser,)
+
+	def put(self, request, filename, format=None):
+		file_obj = request.data['file']
+
+		return Response(status=204)
