@@ -4,4 +4,5 @@ from . import views
 app_name = 'frontend'
 urlpatterns = [
     url(r'^$', views.index, name="index"),
+    url(r'^gallary/(?P<event_id>.*)$', views.gallary, name="gallary")
 ]
