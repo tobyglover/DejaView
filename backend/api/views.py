@@ -65,12 +65,17 @@ def uploadImage(request):
 
 					s3Key = ImageHandler().uploadFile(eventId, fileId + fileExtension, filePath)
 					image = Images(s3Key=s3Key, event=event)
-					image.save()
+
+					if "forEventImage" in request.GET and request.GET.get("forEventImage") == "true":
+						event.image = getImageDataAsDict(image).url
+						event.save()
+					else:
+						image.save()
 
 					os.remove(filePath)
 
 					returnContent["statusCode"] = 200
-					returnContent["reason"] = "all good"
+					returnContent["imageData"] = getImageDataAsDict(image)
 			else:
 				returnContent["statusCode"] = 400
 				returnContent["reason"] = "Incorrect method or data"
@@ -80,6 +85,9 @@ def uploadImage(request):
 	else:
 		returnContent["statusCode"] = 400
 		returnContent["reason"] = "EventId not provided"
+
+	return JsonResponse(returnContent, status=returnContent["statusCode"])
+
 def getEventInfo(request):
 	returnContent = {}
 
