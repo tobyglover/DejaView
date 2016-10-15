@@ -35,23 +35,30 @@ def createEvent(request):
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
 
-def uploadImage(request, eventId):
+def uploadImage(request):
 	returnContent = {}
 
-	if request.method == "POST" and "image" in request.POST:
-		baseDir = "/tmp/imgs/"
-		while True:
-			fileId = hhc(randint(0, 66**8))
-			filePath = baseDir + fileId
-			if not os.path.isfile(filePath):
-				break
+	if "eventId" in request.GET:
+		eventId = request.GET.get("eventId")
+		# TODO:check if this is real eventId
+		
+		if request.method == "POST":
+			baseDir = "/tmp/imgs/"
+			while True:
+				fileId = hhc(randint(0, 66**8))
+				filePath = baseDir + fileId
+				if not os.path.isfile(filePath):
+					break
 
-		with open(filePath, "wb") as fh:
-			fh.write(request.POST.get("image").decode('base64'))
+			with open(filePath, "wb") as fh:
+				fh.write(request.POST.get("image").decode('base64'))
 
-		ImageHandler().uploadFile(eventId, fileId, filePath)
+			ImageHandler().uploadFile(eventId, fileId, filePath)
+		else:
+			returnContent["statusCode"] = 400
+			returnContent["reason"] = "Incorrect method or data"
 	else:
 		returnContent["statusCode"] = 400
-		returnContent["reason"] = "Incorrect method or data"
+		returnContent["reason"] = "EventId not provided"
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
