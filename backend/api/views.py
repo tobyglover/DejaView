@@ -63,7 +63,7 @@ def uploadImage(request):
 						for chunk in uploaded_file.chunks():
 							destination.write(chunk)
 
-					s3Key = ImageHandler().uploadFile(eventId, fileId, filePath)
+					s3Key = ImageHandler().uploadFile(eventId, fileId + fileExtension, filePath)
 					image = Images(s3Key=s3Key, event=event)
 					image.save()
 
@@ -112,7 +112,7 @@ def getImages(request):
 		eventId = request.GET.get("eventId")
 		try:
 			event = Events.objects.get(external_id=eventId)
-			images = Images.objects.filter(event=event)
+			images = Images.objects.filter(event=event).order_by("created")
 
 			returnedImages = []
 			for image in images:
