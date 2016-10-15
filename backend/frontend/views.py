@@ -17,7 +17,7 @@ def gallary(request, event_id):
         event = Events.objects.get(external_id=event_id)
         images = Images.objects.filter(event=event).order_by("created")
         return render(request, 'gallary.html', {'header': header, 'footer': footer, 'event': event, 'images': images})
-
+        
     except Events.DoesNotExist:
         return render(request, 'gallary.html', {'header': header, 'footer': footer})
 
