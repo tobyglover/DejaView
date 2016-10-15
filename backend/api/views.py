@@ -47,9 +47,9 @@ def uploadImage(request, eventId):
 				break
 
 		with open(filePath, "wb") as fh:
-	    	fh.write(request.POST.get("image").decode('base64'))
+			fh.write(request.POST.get("image").decode('base64'))
 
-	    ImageHandler().uploadFile(eventId, fileId, filePath)
+		ImageHandler().uploadFile(eventId, fileId, filePath)
 	else:
 		returnContent["statusCode"] = 400
 		returnContent["reason"] = "Incorrect method or data"
