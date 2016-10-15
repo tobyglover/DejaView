@@ -64,12 +64,12 @@ def uploadImage(request):
 							destination.write(chunk)
 
 					s3Key = ImageHandler().uploadFile(eventId, fileId + fileExtension, filePath)
-					image = Images(s3Key=s3Key, event=event)
 
 					if "forEventImage" in request.GET and request.GET.get("forEventImage") == "true":
-						event.image = getImageDataAsDict(image).url
+						event.image = "https://s3.amazonaws.com/dejaview/" + s3Key
 						event.save()
 					else:
+						image = Images(s3Key=s3Key, event=event)
 						image.save()
 
 					os.remove(filePath)
