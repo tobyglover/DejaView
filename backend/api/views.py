@@ -71,7 +71,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-class joel(APIView):
+class joel(views.APIView):
 	parser_classes = (FileUploadParser,)
 
 	def put(self, request, filename, format=None):
