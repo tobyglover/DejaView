@@ -100,7 +100,7 @@ def getEventInfo(request):
 			returnContent["statusCode"] = 200
 			returnContent["eventId"] = eventId
 			returnContent["description"] = event.description
-			returnContent["eventImage"] = getImageDataAsDict(event.eventImage)
+			returnContent["eventImage"] = event.eventImage
 
 		except Events.DoesNotExist:
 			returnContent["statusCode"] = 400
