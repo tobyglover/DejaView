@@ -15,16 +15,16 @@ def index(request):
 def createEvent(request):
 	returnContent = {}
 
-	if "name" in request.POST:
-		event = Events(name=request.POST.get("name"))
+	if "name" in request.GET:
+		event = Events(name=request.GET.get("name"))
 		while True:
 			external_id = hhc(randint(0, 66**4))
 			if Events.objects.filter(external_id).count() == 0:
 				break
 
 		event.external_id = external_id
-		if "description" in request.POST:
-			event.description = request.POST.get("description")
+		if "description" in request.GET:
+			event.description = request.GET.get("description")
 		event.save()
 
 		returnContent["statusCode"] = 200
