@@ -72,6 +72,28 @@ def uploadImage(request):
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
 
+def getEventInfo(request):
+	returnContent = {}
+
+	if "eventId" in request.GET:
+		eventId = request.GET.get("eventId")
+		try:
+			event = Events.objects.get(external_id=eventId)
+			
+			returnContent["name"] = event.name
+			returnContent["statusCode"] = 200
+			returnContent["eventId"] = eventId
+
+		except Events.DoesNotExist:
+			returnContent["statusCode"] = 400
+			returnContent["reason"] = "EventId does not exist"
+	else:
+		returnContent["statusCode"] = 400
+		returnContent["reason"] = "EventId not provided"
+
+	return JsonResponse(returnContent, status=returnContent["statusCode"])
+
+
 def getImages(request):
 	returnContent = {}
 
