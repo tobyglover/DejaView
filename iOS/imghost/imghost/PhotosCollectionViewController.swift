@@ -8,26 +8,37 @@
 
 import UIKit
 import ImagePicker
+import RealmSwift
+
 
 private let reuseIdentifier = "Cell"
 
-class PhotosCollectionViewController: UICollectionViewController, ImagePickerDelegate {
+class PhotosCollectionViewController: UICollectionViewController, ImagePickerDelegate, UIGestureRecognizerDelegate {
+	@IBOutlet var longpress: UILongPressGestureRecognizer!
 	
+	@IBOutlet var saveButton: UIButton!
 	var eventCode: String?
+	var images: Array<Image>?
+	
+	var currentImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		self.saveButton.isHidden = true
+		
+		
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+		longpress.addTarget(self, action: #selector(handleHoldGesture))
 		if (eventCode == nil) {
 			print("Nope, messed up up")
 			//maybe present an error here?
 			self.navigationController?.popViewController(animated: true)
 		} else {
 			print("event Code in Collection: \(eventCode)")
-			//process event code data
+			getPicsFromEvent()
+			
+			
 		}
 		
         // Register cell classes
@@ -48,6 +59,14 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 		let imagePickerController = ImagePickerController()
 		imagePickerController.delegate = self
 		present(imagePickerController, animated: true, completion: nil)
+	}
+	
+	func getPicsFromEvent () {
+		APIEngine.sharedInstance.getPictureArr(eventID: eventCode!, ending: {imgArr in
+			
+			self.images = imgArr
+			self.collectionView?.reloadData()
+		})
 	}
 
     /*
@@ -70,18 +89,20 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 25
+		if let imgArr = images {
+			return imgArr.count
+		} else {
+			return 0
+		}
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photocell", for: indexPath) as! PhotoCollectionViewCell
-
-		if (indexPath.row == 3) {
-			cell.imageView.image = UIImage(named: "Bubs")
-			return cell
-
+		if let imgArr = images {
+			let pic = imgArr[indexPath.row]
+			print(pic.uri)
+			cell.imageView.downloadedFrom(link: pic.uri)
 		}
-		cell.imageView.image = UIImage(named: "Max")
         // Configure the cell
     
         return cell
@@ -135,6 +156,7 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 	@IBAction func imageTapped(sender: PhotoCollectionViewCell) {
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 		let imageView = sender.imageView
+		currentImage = sender.imageView.image
 		let newImageView = UIImageView(image: imageView?.image)
 		newImageView.frame = self.view.frame
 		newImageView.backgroundColor = UIColor.black
@@ -143,9 +165,16 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 		let tap = UITapGestureRecognizer(target: self, action:#selector(dismissFullscreenImage))
 		newImageView.addGestureRecognizer(tap)
 		self.view.addSubview(newImageView)
+		saveButton.isHidden = false
+		saveButton.bounds = CGRect(x: 30, y: 60, width: 200, height: 60)
+		self.view.addSubview(saveButton)
+		
 	}
 	
 	func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+		
+		saveButton.isHidden = true
+		
 		self.navigationController?.setNavigationBarHidden(false, animated: false)
 		sender.view?.removeFromSuperview()
 	}
@@ -158,6 +187,20 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 	}
 	func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
 		imagePicker.dismiss(animated: true, completion: nil)
+		guard let code = eventCode else {return}
+		for image in images {
+			/*APIEngine.sharedInstance.uploadImageData(img: image, eventID: code, ending: {success in
+
+				
+				if (success == true) {
+					self.getPicsFromEvent()
+					self.collectionView?.reloadData()
+					print("Woo!")
+				} else {
+				}
+			})*/
+		}
+		
 		print("done")
 	}
 	func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
@@ -165,4 +208,39 @@ class PhotosCollectionViewController: UICollectionViewController, ImagePickerDel
 		print("Cancel")
 	}
 	
+	@IBAction func imageLongTapped(sender: PhotoCollectionViewCell) {
+		self.navigationController?.setNavigationBarHidden(true, animated: false)
+		let imageView = sender.imageView
+		
+		print("image long pressed")
+	}
+	
+	func handleHoldGesture (gestureRecognizer: UILongPressGestureRecognizer)
+	{
+	
+	 print("in recognizer")
+		
+	}
+	
+	@IBAction func saveToPhone(_ sender: AnyObject) {
+		
+		let alert = UIAlertController(title: "Saved!", message: "We have saved your image to the phone.", preferredStyle: .alert)
+		let ok = UIAlertAction(title: "Thanks!", style: .cancel, handler: nil)
+		alert.addAction(ok)
+		self.present(alert, animated: true, completion: nil)
+		
+		guard let ci = currentImage else {return}
+		
+		UIImageWriteToSavedPhotosAlbum(ci, nil, nil, nil)
+		
+		
+		
+		
+		
+	}
+	
 }
+
+
+
+

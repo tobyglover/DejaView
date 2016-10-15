@@ -15,33 +15,7 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-				
-		/*
-		for i in 1...10 {
-			let event = Event()
-			event.external_id = "\(i)"
-			event.desc = "This is event \(i)! It's a really cool fun time."
-			event.created = NSDate()
-			event.eventImage = "https://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cage_2011_CC.jpg"
-			event.name = "Event \(i)"
-			
-			let realm = try! Realm()
-			
-			try! realm.write {
-				realm.add(event)
-			}
-
-		}*/
 		
-	/*
-		
-		let navigationBar = navigationController!.navigationBar
-		navigationBar.setBackgroundImage(UIImage(named: "BarBackground"),
-		                                 for: .default)
-		navigationBar.shadowImage = UIImage()
-		
-		self.navigationItem.titleView = UIImageView(image: UIImage(named: "DejaView-Green"))
-		*/
 		self.tableView.emptyDataSetSource = self;
 		self.tableView.emptyDataSetDelegate = self;
       
@@ -189,9 +163,22 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
     }*/
 	
 	func transitionToPhotosCollection(eventCode: String) {
-		let photos = PhotosCollectionViewController()
-		photos.eventCode = eventCode
-		self.navigationController?.pushViewController(photos, animated: true)
+		
+		APIEngine.sharedInstance.getEventDetail(eventID: eventCode, ending: {eventExists in
+			
+			if (eventExists == true) {
+			
+				let photos = self.storyboard!.instantiateViewController(withIdentifier: "photos") as! PhotosCollectionViewController
+				photos.eventCode = eventCode
+				self.navigationController?.pushViewController(photos, animated: true)
+			} else {
+				
+				let alert = UIAlertController(title: "Error", message: "We have encounterend an error retrieving your event. Check network settings.", preferredStyle: .alert)
+				let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+				alert.addAction(ok)
+				self.present(alert, animated: true, completion: nil)
+			}
+		})
 	}
 	
 	
@@ -208,7 +195,7 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 	func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
 		return UIColor(colorLiteralRed: 0.0, green: 177.0/255.0, blue: 83.0/255.0, alpha: 1.0)
 	}
-	
+	/*
 	func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
 		var attributes = Dictionary<String, Any>()
 		attributes[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: 14)
@@ -229,7 +216,7 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 	
 	func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
 		enterEventCode()
-	}
+	} */
 	
 
 
@@ -243,7 +230,7 @@ extension UIImageView {
 		URLSession.shared.dataTask(with: url) { (data, response, error) in
 			guard
 				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-				let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+				let _ = response?.mimeType,
 				let data = data, error == nil,
 				let image = UIImage(data: data)
 				else { return }
@@ -253,6 +240,7 @@ extension UIImageView {
 			}.resume()
 	}
 	func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+		print("Got hereOOOOO")
 		guard let url = URL(string: link) else { return }
 		downloadedFrom(url: url, contentMode: mode)
 	}

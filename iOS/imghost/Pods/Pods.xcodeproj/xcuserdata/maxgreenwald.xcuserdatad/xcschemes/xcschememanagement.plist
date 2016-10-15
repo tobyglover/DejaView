@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DZNEmptyDataSet.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -44,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -52,7 +62,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>334DAF371FFB4A26BE5276BE92D708C2</key>
+		<key>175A973D5C7F6FBE7958E8DA6721848C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,12 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7C4108C3722F95AE55CEDD665AC9630D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8BADA9F9B0CACE02E712B6C1B78DBAE8</key>
+		<key>93926B985AD8C6037F954C0DF65AF564</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +97,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D36FD8B267BFB8AA4DCFD6B9D3F79620</key>
+		<key>CA860D0CA5D5619672FBC0BA7778EA5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CAA959F62E5E7E270D4452C316A10E94</key>
 		<dict>
 			<key>primary</key>
 			<true/>

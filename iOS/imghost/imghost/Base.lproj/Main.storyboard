@@ -54,7 +54,7 @@
                                 <rect key="frame" x="0.0" y="188" width="375" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7A-6G-rbB" id="uMD-cc-Mhz">
-                                    <frame key="frameInset" width="375" height="87"/>
+                                    <frame key="frameInset" width="375" height="87.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qp4-xB-IO6">
@@ -122,7 +122,7 @@
         <!--Photos Collection View Controller-->
         <scene sceneID="hk4-Uf-56C">
             <objects>
-                <collectionViewController id="Dpi-1C-hcK" customClass="PhotosCollectionViewController" customModule="imghost" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="photos" id="Dpi-1C-hcK" customClass="PhotosCollectionViewController" customModule="imghost" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="3Dr-pl-jfx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,16 +133,6 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have x events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mHF-bw-BFc">
-                            <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="ZIU-FE-1G8"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photocell" id="x3z-ry-YGZ" customClass="PhotoCollectionViewCell" customModule="imghost" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="96" width="123" height="135"/>
@@ -151,11 +141,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="123" height="135"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KyD-iI-L5d">
+                                        <imageView tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KyD-iI-L5d">
                                             <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="W35-XX-8kK" appends="YES" id="o6u-De-kvq"/>
+                                            </connections>
                                         </imageView>
                                     </subviews>
                                 </view>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="KyD-iI-L5d" firstAttribute="top" secondItem="x3z-ry-YGZ" secondAttribute="top" id="9sd-2e-nhg"/>
                                     <constraint firstItem="KyD-iI-L5d" firstAttribute="leading" secondItem="x3z-ry-YGZ" secondAttribute="leading" id="K85-gz-tEl"/>
@@ -208,8 +202,23 @@
                             <outlet property="delegate" destination="Dpi-1C-hcK" id="Skp-Ze-idi"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="longpress" destination="W35-XX-8kK" id="QaS-7S-PnF"/>
+                        <outlet property="saveButton" destination="9tM-8d-zJe" id="ZLm-hD-O5Q"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qqr-rR-pn5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9tM-8d-zJe">
+                    <rect key="frame" x="0.0" y="0.0" width="117" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="SAVE TO PHONE">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="saveToPhone:" destination="Dpi-1C-hcK" eventType="touchUpInside" id="BdZ-iQ-msk"/>
+                    </connections>
+                </button>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="W35-XX-8kK"/>
             </objects>
             <point key="canvasLocation" x="936.79999999999995" y="119.1904047976012"/>
         </scene>
