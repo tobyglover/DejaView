@@ -24,8 +24,8 @@ def createEvent(request):
 				break
 
 		event.external_id = external_id
-		if "description" in request.GET:
-			event.description = request.GET.get("description")
+		if "description" in request.POST:
+			event.description = request.POST.get("description")
 		event.save()
 
 		returnContent["statusCode"] = 200
@@ -65,12 +65,17 @@ def uploadImage(request):
 
 					s3Key = ImageHandler().uploadFile(eventId, fileId + fileExtension, filePath)
 					image = Images(s3Key=s3Key, event=event)
-					image.save()
+
+					if "forEventImage" in request.GET and request.GET.get("forEventImage") == "true":
+						event.image = getImageDataAsDict(image).url
+						event.save()
+					else:
+						image.save()
 
 					os.remove(filePath)
 
 					returnContent["statusCode"] = 200
-					returnContent["reason"] = "all good"
+					returnContent["imageData"] = getImageDataAsDict(image)
 			else:
 				returnContent["statusCode"] = 400
 				returnContent["reason"] = "Incorrect method or data"
@@ -94,6 +99,8 @@ def getEventInfo(request):
 			returnContent["name"] = event.name
 			returnContent["statusCode"] = 200
 			returnContent["eventId"] = eventId
+			returnContent["description"] = event.description
+			returnContent["eventImage"] = getImageDataAsDict(event.image)
 
 		except Events.DoesNotExist:
 			returnContent["statusCode"] = 400
@@ -116,7 +123,7 @@ def getImages(request):
 
 			returnedImages = []
 			for image in images:
-				imageData = {"added":image.created, "url":"https://s3.amazonaws.com/dejaview/" + image.s3Key}
+				imageData = getImageDataAsDict(image)
 				returnedImages.append(imageData)
 
 			returnContent["images"] = returnedImages
@@ -131,3 +138,9 @@ def getImages(request):
 		returnContent["reason"] = "EventId not provided"
 
 	return JsonResponse(returnContent, status=returnContent["statusCode"])
+
+def getImageDataAsDict(image):
+	data = {"url":"https://s3.amazonaws.com/dejaview/" + image.s3Key}
+	if image.created != None:
+		data["added"] = image.created
+	return data
