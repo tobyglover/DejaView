@@ -1,0 +1,99 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'gallary/css/blueimp-gallery.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+<body>
+    <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+
+    <div class="container-fluid">
+        {{ header }}
+        <div class="row">
+            <h1 id="title" class="col-xs-10 col-sm-offset-1">
+                <!-- {{ event.external_id }} -->
+            </h1>
+            <hr class="col-xs-10 col-sm-offset-1">
+        </div>
+        <div class="row" style="text-align: center">
+
+            <form id="formupload" action="http://dejaview.pictures/api/uploadImage?eventId={{ event.external_id }}" method="post" enctype="multipart/form-data" class="col-xs-10 col-sm-offset-1">
+                <input id="file" type="file" name="picture" accept="image/*" style="display: none;">
+                <!-- <input id="submit" type="submit"> -->
+            </form>
+            <h2>Select files to add to the dropbox:</h2>
+            <button id="fakeButton" onclick="upload()">Upload</button>
+            
+        </div>
+        <div id="gallary" class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div id="links" class="flex-container">
+                    {% for image in images %}
+                    <a class="flex-item" href="https://s3.amazonaws.com/dejaview/{{ image.url }}" title="Banana">
+                        <img src="https://s3.amazonaws.com/dejaview/{{ image.uri }}" alt="Banana">
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {{ footer }}
+    </div>
+
+    <script src="{% static 'gallary/js/blueimp-gallery.min.js' %}"></script>
+    <script>
+
+    var baseURL = "http://dejaview.pictures";
+
+    function upload(){
+        document.getElementById("file").click();
+    }
+    document.getElementById("file").onchange = function() {
+        document.getElementById("formupload").submit();
+    };
+    document.getElementById("title").innerHTML = getTitle();
+
+    function getTitle() {
+        var theUrl = baseURL + "/api/getEventInfo?eventId={{ event.external_id }}";
+        console.log("Making a get request to [" + theUrl + "] to get event data for id={{ event.external_id }}.");
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        xmlHttp.send(null);
+        var response = JSON.parse(xmlHttp.responseText);
+        return "" + response.name + " (" + response.eventId + ")";
+    }
+
+    // var container = document.getElementById("links");
+    // var theUrl = baseURL + "/api/getImages?eventId={{ event.external_id }}";
+    // console.log("Making a get request to [" + theUrl + "] to get images.");
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.open("GET", theUrl, false); // false for synchronous request
+    // xmlHttp.send(null);
+    // var response_array = (JSON.parse(xmlHttp.responseText))["images"];
+    // for (var i = 0; i < response_array.length; i++) {
+    //     container.innerHTML += '<a class="flex-item" href="' + response_array[i]["url"] + '" title="Banana"><img src="' + response_array[i]["url"] + '" alt="Banana"></a>'
+    // }
+
+
+    document.getElementById('links').onclick = function(event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement,
+            link = target.src ? target.parentNode : target,
+            options = {
+                index: link,
+                event: event
+            },
+            links = this.getElementsByTagName('a');
+        blueimp.Gallery(links, options);
+    };
+    </script>
+
+    <body>

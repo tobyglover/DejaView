@@ -1,0 +1,36 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+<body>
+    <div class="fluid-container">
+        {{ header }}
+        <div id="register" class="row">
+            <div class="row">
+                <div id="call-to-action" class="col-sm-8 col-sm-offset-2">
+                    <h1>Howdy!</h1>
+                    <h2>Enter an event code to get started.</h2>
+                    <input id="code-input" type="text" name="code" maxlength="4">
+                    <img id="submit" onclick="register_first_event()" src="{% static 'img/arrow.png' %}">
+                </div>
+            </div>
+        </div>
+        <div id="list-events" class="row">
+            <div class="row">
+                <div id="generate" class="col-sm-8 col-sm-offset-2">
+                    <h1>Create your own event!</h1>
+                    <button onclick="create_event()">Get Your Code</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="event-list" class="col-sm-8 col-sm-offset-2">
+                    
+                </div>
+            </div>
+        </div>
+        {{ footer }}
+    </div>
+
+    <script src="{% static 'main.js' %}"></script>
+<body>
