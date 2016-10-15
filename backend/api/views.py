@@ -75,7 +75,7 @@ def uploadImage(request):
 						returnContent["imageData"] = getImageDataAsDict(image)
 
 					os.remove(filePath)
-
+					returnContent['image'] = event.image
 					returnContent["statusCode"] = 200
 			else:
 				returnContent["statusCode"] = 400
