@@ -8,11 +8,32 @@
 
 import UIKit
 import DZNEmptyDataSet
+import RealmSwift
 
 class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
+	
     override func viewDidLoad() {
         super.viewDidLoad()
+				
+		/*
+		for i in 1...10 {
+			let event = Event()
+			event.external_id = "\(i)"
+			event.desc = "This is event \(i)! It's a really cool fun time."
+			event.created = NSDate()
+			event.eventImage = "https://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cage_2011_CC.jpg"
+			event.name = "Event \(i)"
+			
+			let realm = try! Realm()
+			
+			try! realm.write {
+				realm.add(event)
+			}
+
+		}*/
+		
+	/*
 		
 		let navigationBar = navigationController!.navigationBar
 		navigationBar.setBackgroundImage(UIImage(named: "BarBackground"),
@@ -20,7 +41,7 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 		navigationBar.shadowImage = UIImage()
 		
 		self.navigationItem.titleView = UIImageView(image: UIImage(named: "DejaView-Green"))
-		
+		*/
 		self.tableView.emptyDataSetSource = self;
 		self.tableView.emptyDataSetDelegate = self;
       
@@ -42,11 +63,15 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 		
 		let submitAction = UIAlertAction(title: "Enter", style: .default, handler: { (action) in
 			if let code = codePopup.textFields?[0].text {
+				self.transitionToPhotosCollection(eventCode: code)
 				print("got code \(code)")
 			} else {
 				print("ERROR - no text field")
 			}
-			self.performSegue(withIdentifier: "photos", sender: nil) // remove later with real logic
+			
+			
+			
+
 		})
 		
 		codePopup.addAction(submitAction)
@@ -71,19 +96,46 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+		let realm = try! Realm()
+		let events = realm.objects(Event.self)
+        return events.count
     }
 	
 
 	
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventsTableViewCell
+		
+		let realm = try! Realm()
+		let events = realm.objects(Event.self)
+		let event = events[indexPath.row]
+		
+		
+		cell.title.text = event.name
+		cell.desc.text = event.desc
+		cell.code.text = event.external_id
+		
+		cell.pic.downloadedFrom(link: event.eventImage)
+		
+		//cell.imageView?.image = UIImage(data: Data(contentsOf: URL(string: event.eventImage)!))
+		
+		
         // Configure the cell...
 
         return cell
     }
-    
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let realm = try! Realm()
+		let events = realm.objects(Event.self)
+		let event = events[indexPath.row]
+		
+		self.transitionToPhotosCollection(eventCode: event.external_id)
+	}
+	
+	
+
+	
 
     /*
     // Override to support conditional editing of the table view.
@@ -120,15 +172,28 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
     }
     */
 
-    /*
+	
     // MARK: - Navigation
 
+	/*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if (segue.identifier == "photos") {
+			let photos = segue.destination as! PhotosCollectionViewController
+			if let code = mostRecentEventCode {
+				photos.eventCode = code
+			}
+		}
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+    }*/
+	
+	func transitionToPhotosCollection(eventCode: String) {
+		let photos = PhotosCollectionViewController()
+		photos.eventCode = eventCode
+		self.navigationController?.pushViewController(photos, animated: true)
+	}
+	
 	
 	// MARK: - DNZEmptyDataSource
 	
@@ -169,4 +234,26 @@ class EventsTableViewController: UITableViewController, DZNEmptyDataSetSource, D
 
 
 
+}
+
+
+extension UIImageView {
+	func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+		contentMode = mode
+		URLSession.shared.dataTask(with: url) { (data, response, error) in
+			guard
+				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+				let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+				let data = data, error == nil,
+				let image = UIImage(data: data)
+				else { return }
+			DispatchQueue.main.async() { () -> Void in
+				self.image = image
+			}
+			}.resume()
+	}
+	func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+		guard let url = URL(string: link) else { return }
+		downloadedFrom(url: url, contentMode: mode)
+	}
 }

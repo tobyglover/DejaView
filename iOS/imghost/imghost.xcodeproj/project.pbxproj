@@ -20,6 +20,8 @@
 		98BE0ABB1DB2041400C4A294 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE0ABA1DB2041400C4A294 /* PhotosCollectionViewController.swift */; };
 		98BE0ABD1DB20C3E00C4A294 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE0ABC1DB20C3E00C4A294 /* PhotoCollectionViewCell.swift */; };
 		98BE0ABF1DB20E2700C4A294 /* PhotosCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE0ABE1DB20E2700C4A294 /* PhotosCollectionViewFlowLayout.swift */; };
+		98BE0E361DB2345900C4A294 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE0E351DB2345900C4A294 /* EventsTableViewCell.swift */; };
+		98BE0E3A1DB24CC700C4A294 /* APIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE0E391DB24CC700C4A294 /* APIEngine.swift */; };
 		9F1705141FB22B894246653D /* Pods_imghostUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD41CC5E0AD5F3737ADED6DF /* Pods_imghostUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		98BE0ABA1DB2041400C4A294 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		98BE0ABC1DB20C3E00C4A294 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		98BE0ABE1DB20E2700C4A294 /* PhotosCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		98BE0E351DB2345900C4A294 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
+		98BE0E391DB24CC700C4A294 /* APIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEngine.swift; sourceTree = "<group>"; };
 		B6E3150005840F5DA1FA602D /* Pods-imghostUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-imghostUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-imghostUITests/Pods-imghostUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8EC953F90617140551DA4D3 /* Pods-imghost.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-imghost.debug.xcconfig"; path = "Pods/Target Support Files/Pods-imghost/Pods-imghost.debug.xcconfig"; sourceTree = "<group>"; };
 		CD41CC5E0AD5F3737ADED6DF /* Pods_imghostUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_imghostUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,10 +151,12 @@
 			children = (
 				98BE0A881DB1C00B00C4A294 /* AppDelegate.swift */,
 				98BE0AB61DB1CE7600C4A294 /* EventsTableViewController.swift */,
+				98BE0E351DB2345900C4A294 /* EventsTableViewCell.swift */,
 				98BE0A8C1DB1C00B00C4A294 /* Main.storyboard */,
 				98BE0ABE1DB20E2700C4A294 /* PhotosCollectionViewFlowLayout.swift */,
 				98BE0ABA1DB2041400C4A294 /* PhotosCollectionViewController.swift */,
 				98BE0ABC1DB20C3E00C4A294 /* PhotoCollectionViewCell.swift */,
+				98BE0E391DB24CC700C4A294 /* APIEngine.swift */,
 				98BE0AB81DB1FE3100C4A294 /* Model.swift */,
 				98BE0A8F1DB1C00B00C4A294 /* Assets.xcassets */,
 				98BE0A911DB1C00B00C4A294 /* LaunchScreen.storyboard */,
@@ -443,6 +449,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				98BE0AB91DB1FE3100C4A294 /* Model.swift in Sources */,
+				98BE0E361DB2345900C4A294 /* EventsTableViewCell.swift in Sources */,
+				98BE0E3A1DB24CC700C4A294 /* APIEngine.swift in Sources */,
 				98BE0ABD1DB20C3E00C4A294 /* PhotoCollectionViewCell.swift in Sources */,
 				98BE0A891DB1C00B00C4A294 /* AppDelegate.swift in Sources */,
 				98BE0AB71DB1CE7600C4A294 /* EventsTableViewController.swift in Sources */,

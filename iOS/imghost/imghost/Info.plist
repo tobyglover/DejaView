@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Used to share media from library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to take pictures to share</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>get location when taking pictures as metadata</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to share pictures from library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

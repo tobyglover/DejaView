@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import ImagePicker
 
 private let reuseIdentifier = "Cell"
 
-class PhotosCollectionViewController: UICollectionViewController {
+class PhotosCollectionViewController: UICollectionViewController, ImagePickerDelegate {
+	
+	var eventCode: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +21,20 @@ class PhotosCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+		if (eventCode == nil) {
+			print("Nope, messed up up")
+			//maybe present an error here?
+			self.navigationController?.popViewController(animated: true)
+		} else {
+			print("event Code in Collection: \(eventCode)")
+			//process event code data
+		}
+		
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 		
 		self.collectionView?.collectionViewLayout = PhotosCollectionViewFlowLayout()
+		
 
         // Do any additional setup after loading the view.
     }
@@ -30,6 +43,12 @@ class PhotosCollectionViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	@IBAction func presentImagePicker() {
+		let imagePickerController = ImagePickerController()
+		imagePickerController.delegate = self
+		present(imagePickerController, animated: true, completion: nil)
+	}
 
     /*
     // MARK: - Navigation
@@ -57,7 +76,11 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photocell", for: indexPath) as! PhotoCollectionViewCell
 
-		
+		if (indexPath.row == 3) {
+			cell.imageView.image = UIImage(named: "Bubs")
+			return cell
+
+		}
 		cell.imageView.image = UIImage(named: "Max")
         // Configure the cell
     
@@ -65,11 +88,15 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		
-		print(indexPath)
-		
-		for cell in collectionView.visibleCells
+		imageTapped(sender: collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell)
 	}
+	
+	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+		return headerView
+	}
+
+
 	
 
     // MARK: UICollectionViewDelegate
@@ -102,5 +129,40 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     }
     */
+	
 
+	
+	@IBAction func imageTapped(sender: PhotoCollectionViewCell) {
+		self.navigationController?.setNavigationBarHidden(true, animated: false)
+		let imageView = sender.imageView
+		let newImageView = UIImageView(image: imageView?.image)
+		newImageView.frame = self.view.frame
+		newImageView.backgroundColor = UIColor.black
+		newImageView.contentMode = .scaleAspectFit
+		newImageView.isUserInteractionEnabled = true
+		let tap = UITapGestureRecognizer(target: self, action:#selector(dismissFullscreenImage))
+		newImageView.addGestureRecognizer(tap)
+		self.view.addSubview(newImageView)
+	}
+	
+	func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+		self.navigationController?.setNavigationBarHidden(false, animated: false)
+		sender.view?.removeFromSuperview()
+	}
+	
+	// MARK: Image Picker Delegate
+	
+	func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+		//imagePicker.dismiss(animated: true, completion: nil)
+		print("wrapper")
+	}
+	func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+		imagePicker.dismiss(animated: true, completion: nil)
+		print("done")
+	}
+	func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+		imagePicker.dismiss(animated: true, completion: nil)
+		print("Cancel")
+	}
+	
 }

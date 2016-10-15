@@ -10,11 +10,15 @@ import RealmSwift
 
 // Event model
 class Event: Object {
-	dynamic var external_id: Int = 0
+	dynamic var external_id = ""
 	dynamic var name = ""
 	dynamic var desc = ""
 	dynamic var eventImage = ""
 	dynamic var created: NSDate?
+	
+	override static func primaryKey() -> String? {
+		return "external_id"
+	}
 }
 
 // Image model

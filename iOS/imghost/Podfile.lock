@@ -1,54 +1,23 @@
 PODS:
   - DZNEmptyDataSet (1.8.1)
-  - ImageViewer (4.0)
-  - libwebp (0.5.1):
-    - libwebp/core (= 0.5.1)
-    - libwebp/dec (= 0.5.1)
-    - libwebp/demux (= 0.5.1)
-    - libwebp/dsp (= 0.5.1)
-    - libwebp/enc (= 0.5.1)
-    - libwebp/mux (= 0.5.1)
-    - libwebp/utils (= 0.5.1)
-    - libwebp/webp (= 0.5.1)
-  - libwebp/core (0.5.1):
-    - libwebp/webp
-  - libwebp/dec (0.5.1):
-    - libwebp/core
-  - libwebp/demux (0.5.1):
-    - libwebp/core
-  - libwebp/dsp (0.5.1):
-    - libwebp/core
-  - libwebp/enc (0.5.1):
-    - libwebp/core
-  - libwebp/mux (0.5.1):
-    - libwebp/core
-  - libwebp/utils (0.5.1):
-    - libwebp/core
-  - libwebp/webp (0.5.1)
+  - ImagePicker (2.0.0)
   - Realm (2.0.2):
     - Realm/Headers (= 2.0.2)
   - Realm/Headers (2.0.2)
   - RealmSwift (2.0.2):
     - Realm (= 2.0.2)
-  - SDWebImage/Core (3.8.2)
-  - SDWebImage/WebP (3.8.2):
-    - libwebp
-    - SDWebImage/Core
 
 DEPENDENCIES:
   - DZNEmptyDataSet (~> 1.8)
-  - ImageViewer
+  - ImagePicker
   - RealmSwift
-  - SDWebImage/WebP
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  ImageViewer: 364abc0309c33dda86d08ca25b0243e5c67d8cd3
-  libwebp: b9126f8982a95370cf4eaad9bb3fefd57f052c15
+  ImagePicker: 81175d36c2852cb543cb4f5d6c19e28f3e8d90eb
   Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
   RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: bb56b96cfa08754162c9afe1b0b9471d7ffd96e4
+PODFILE CHECKSUM: ca373c7b7c39d78e7d8d06aac91eb6a478b5000c
 
 COCOAPODS: 1.0.1

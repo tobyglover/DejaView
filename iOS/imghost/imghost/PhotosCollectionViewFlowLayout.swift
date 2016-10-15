@@ -24,6 +24,7 @@ class PhotosCollectionViewFlowLayout: UICollectionViewFlowLayout {
 		minimumInteritemSpacing = 1
 		minimumLineSpacing = 1
 		scrollDirection = .vertical
+		headerReferenceSize = CGSize(width: 0, height: 96)
 	}
 	
 	override var itemSize: CGSize {
