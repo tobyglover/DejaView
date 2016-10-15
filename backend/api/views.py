@@ -43,7 +43,7 @@ def uploadImage(request):
 	if "eventId" in request.GET:
 		try:
 			eventId = request.GET.get("eventId")
-			
+			event = Events.objects.get(external_id=eventId)
 			if request.method == "POST":
 				uploaded_file = request.FILES['file']
 				baseDir = "/tmp/"
