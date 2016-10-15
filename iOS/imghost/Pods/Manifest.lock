@@ -1,0 +1,29 @@
+PODS:
+  - Alamofire (4.0.1)
+  - DZNEmptyDataSet (1.8.1)
+  - ImagePicker (2.0.0)
+  - Realm (2.0.2):
+    - Realm/Headers (= 2.0.2)
+  - Realm/Headers (2.0.2)
+  - RealmSwift (2.0.2):
+    - Realm (= 2.0.2)
+  - SwiftyJSON (3.1.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - DZNEmptyDataSet (~> 1.8)
+  - ImagePicker
+  - RealmSwift
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  ImagePicker: 81175d36c2852cb543cb4f5d6c19e28f3e8d90eb
+  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
+  RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
+
+PODFILE CHECKSUM: c501bf8ae21859723715efe63fff9d7bc9a3e3af
+
+COCOAPODS: 1.0.1
