@@ -16,7 +16,7 @@ def index(request):
 def createEvent(request):
 	returnContent = {}
 
-	if "name" in request.GET:
+	if "name" in request.GET and request.GET.get("name") != "":
 		event = Events(name=request.GET.get("name"))
 		while True:
 			external_id = hhc(randint(0, 66**4))
