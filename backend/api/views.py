@@ -88,7 +88,7 @@ def getImages(request):
 
 			returnContent["images"] = returnedImages
 			returnContent["statusCode"] = 200
-			returnContent["eventId"] = eventID
+			returnContent["eventId"] = eventId
 
 		except Events.DoesNotExist:
 			returnContent["statusCode"] = 400
