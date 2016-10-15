@@ -50,6 +50,7 @@ def uploadImage(request):
             	for chunk in uploaded_file.chunks():
                 	destination.write(chunk)
 
+            return HttpResponse(file_name)
 			while True:
 				fileId = hhc(randint(0, 66**8))
 				filePath = baseDir + fileId
