@@ -10,4 +10,4 @@ class ImageHandler:
 		data = open(filePath, 'rb')
 		self.bucket.put_object(Key=eventId + '/' + fileId, Body=data)
 
-		
+
