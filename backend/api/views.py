@@ -7,6 +7,7 @@ from .models import Events
 from random import randint
 import os.path
 from hexahexacontadecimal import hhc
+from ImageHandler import ImageHandler
 
 # Create your views here.
 def index(request):
@@ -45,12 +46,14 @@ def uploadImage(request):
 
 		if request.method == "POST":
 			baseDir = "/tmp/"
-
-			while True:
-				fileId = hhc(randint(0, 66**8))
-				filePath = baseDir + fileId
-				if not os.path.isfile(filePath):
-					break
+			fileId = hhc(randint(0, 66**8))
+			filePath = baseDir + fileId
+			
+			# while True:
+			# 	fileId = hhc(randint(0, 66**8))
+			# 	filePath = baseDir + fileId
+			# 	if not os.path.isfile(filePath):
+			# 		break
 
 			uploaded_file = request.FILES['file']
 			with open(filePath, 'wb+') as destination:
