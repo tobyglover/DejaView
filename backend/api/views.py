@@ -68,6 +68,8 @@ def uploadImage(request):
 					if "forEventImage" in request.GET and request.GET.get("forEventImage") == "true":
 						event.eventImage = "https://s3.amazonaws.com/dejaview/" + s3Key
 						event.save()
+						
+						returnContent['image'] = event.eventImage
 					else:
 						image = Images(s3Key=s3Key, event=event)
 						image.save()
@@ -75,7 +77,6 @@ def uploadImage(request):
 						returnContent["imageData"] = getImageDataAsDict(image)
 
 					os.remove(filePath)
-					returnContent['image'] = event.eventImage
 					returnContent["statusCode"] = 200
 			else:
 				returnContent["statusCode"] = 400
