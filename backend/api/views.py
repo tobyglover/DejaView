@@ -53,7 +53,7 @@ def uploadImage(request):
 			with open(filePath, 'wb+') as destination:
 				for chunk in uploaded_file.chunks():
 					destination.write(chunk)
-
+			return HttpResponse("ok")
 			ImageHandler().uploadFile(eventId, fileId, filePath)
 		else:
 			returnContent["statusCode"] = 400
