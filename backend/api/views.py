@@ -7,7 +7,7 @@ from .models import Events
 from random import randint
 import os.path
 from hexahexacontadecimal import hhc
-from ImageHandler import ImageHandler
+from .ImageHandler import ImageHandler
 
 # Create your views here.
 def index(request):
@@ -49,7 +49,7 @@ def uploadImage(request):
 			baseDir = "/tmp/"
 			fileId = hhc(randint(0, 66**8))
 			filePath = baseDir + fileId + uploaded_file.name
-			return HttpResponse("ok")
+
 			with open(filePath, 'wb+') as destination:
 				for chunk in uploaded_file.chunks():
 					destination.write(chunk)
