@@ -83,7 +83,7 @@ def getImages(request):
 
 			returnedImages = []
 			for image in images:
-				imageData = {added:image.created, url:"https://s3.amazonaws.com/dejaview/" + image.s3Key}
+				imageData = {"added":image.created, "url":"https://s3.amazonaws.com/dejaview/" + image.s3Key}
 				returnedImages.append(imageData)
 
 			returnContent["images"] = returnedImages

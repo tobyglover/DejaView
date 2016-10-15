@@ -10,6 +10,8 @@ class ImageHandler:
 		self.bucket = s3.Bucket('dejaview')
 
 	def uploadFile(self, eventId, fileId, filePath):
-		self.s3.upload_file(filePath, 'dejaview', eventId + "/"  + fileId)
+		s3key = eventId + "/"  + fileId
+		self.s3.upload_file(filePath, 'dejaview', s3key)
+		return s3key
 
 
