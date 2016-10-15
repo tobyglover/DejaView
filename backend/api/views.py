@@ -71,11 +71,12 @@ def uploadImage(request):
 					else:
 						image = Images(s3Key=s3Key, event=event)
 						image.save()
+						
+						returnContent["imageData"] = getImageDataAsDict(image)
 
 					os.remove(filePath)
 
 					returnContent["statusCode"] = 200
-					returnContent["imageData"] = getImageDataAsDict(image)
 			else:
 				returnContent["statusCode"] = 400
 				returnContent["reason"] = "Incorrect method or data"
