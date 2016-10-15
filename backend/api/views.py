@@ -66,7 +66,7 @@ def uploadImage(request):
 					s3Key = ImageHandler().uploadFile(eventId, fileId + fileExtension, filePath)
 
 					if "forEventImage" in request.GET and request.GET.get("forEventImage") == "true":
-						event.image = "https://s3.amazonaws.com/dejaview/" + s3Key
+						event.eventImage = "https://s3.amazonaws.com/dejaview/" + s3Key
 						event.save()
 					else:
 						image = Images(s3Key=s3Key, event=event)
