@@ -60,8 +60,8 @@ public class Login extends AppCompatActivity {
         myContext = getApplicationContext();
 
         //CLEAR LOCAL STORAGE
-
-        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+/*
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Editor editor = settings.edit();
         editor.putString("codes", "");
         editor.commit();*/
