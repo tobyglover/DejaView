@@ -126,13 +126,44 @@ button{
 
 #list-events{
     text-align: center;
+    min-height: 70vh;
 }
 
 .event{
-    border-width: 1px;
-    border-color: #C6C7C9;
-    border-style: solid;
+    text-align: left;
     margin: 20px;
+}
+
+#event-list .row{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/*// .event div{
+//     position: relative;
+//     display: inline-block;
+// }
+// .event h2{
+//     display: inline;
+//     padding: 0;
+//     margin: 0;
+//     padding-left: 40px;
+//     padding-right: 20px;
+//     font-size: 50px;
+// }
+// .event h3{
+//     margin: 0;
+//     padding: 0;
+//     display: inline;
+//     padding-left: 10px;
+//     padding-right: 10px;
+//     font-size: 30px;
+// }
+*/
+#event-list .row img{
+    display: inline;
+    max-width: 200px;
 }
 
 #upload{
@@ -141,4 +172,8 @@ button{
 
 #fakeButton{
     display: inline-block;
+}
+#desc{
+    font-size: 20px;
+    font-weight: normal;
 }
